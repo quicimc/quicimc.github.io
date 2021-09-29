@@ -82,9 +82,8 @@
       On this website we present additional information about our paper <i>It’s over 9000: Analyzing early QUIC
         Deployments with the Standardization on the Horizon</i> and provide access to extended analysis results.
     </p>
-    <h2 id="results">Analysis Results</h2>
+    <h2 id="results">Results and Data</h2>
     <p>
-    <li> Further results and contact information to request full access to raw data will come soon </li>
     <li> We provide a list of supported version sets from the latest ZMap scans with the number of respective addresses and ASes for: 
         <ul>
             <li> <a href="https://github.com/quicimc/quicimc.github.io/blob/main/data/zmap-v4-versions-cw18-2021.csv"> IPv4 </a> </li>
@@ -125,44 +124,130 @@
       </thead>
     </table>
 
+    <h4> Raw Data </h4>
+    We publish raw data to reproduce our analysis at the <a href="https://mediatum.ub.tum.de/1624408?id=1624408&change_language=en"> TUM university library </a> to guaranteee long-term availability.<br>
+    Dataset DOI: <a href="https://doi.org/10.14459/2021mp1624408"> 10.14459/2021mp1624408 </a>
+    <p>
+    <h4>Referencing our Work</h4>
+
+    If you are using collected data or aggregated results from this work in your publication, please refer to it with the following reference <b><a href="zirngibl2021over9000.bib">[bib]</a></b>:
+    <br>
+
+    <small>
+    <code>
+        @inproceedings{zirngibl2021over9000,<br>
+        &nbsp;&nbsp;    title = {It’s over 9000: Analyzing early QUIC Deployments with the Standardization on the Horizon},<br>
+        &nbsp;&nbsp;    author = {Zirngibl, Johannes and Buschmann, Philippe and Sattler, Patrick and Jaerger, Benedikt and Aulbach, Juliane and Carle, Georg},<br>
+        &nbsp;&nbsp;    booktitle = {Proceedings of the 2018 Internet Measurement Conference},<br>
+        &nbsp;&nbsp;    year = {2021},<br>
+        &nbsp;&nbsp;    location = {Virtual Event, USA},<br>
+        &nbsp;&nbsp;    numpages = {15},<br>
+        &nbsp;&nbsp;    doi = {10.1145/3487552.3487826},<br>
+        &nbsp;&nbsp;    publisher = {ACM},<br>
+        &nbsp;&nbsp;    address = {New York, NY, USA},<br>
+            }
+    </code>
+    </small>
+    <p>
     <h2 id="tools">Software and Tools</h2>
-    <ul>
-      <li>ZMap Modules: Coming Soon </li>
-      <li>QScanner Coming Soon </li>
-    </ul>
+    
+	During our QUIC study, we developed tools to detect QUIC deployments using ZMap and conduct stateful scans with the QScanner.
+	We publish the following software and tools for use by the scientific community:
+        <ul>
+          <li><a href="#qscanner">QScanner</a></li>
+      	  <li><a href="#zmap">ZMap Modules</a></li>
+          <li><a href="#dns">DNS Scans</a></li>
+        </ul>
+    <p>
+    <h4 id="qscanner">QScanner</h4>
+      We developed and published the QScanner, a stateful scanner for QUIC.
+ 	  Source: <a href="https://github.com/tumi8/qscanner"> https://github.com/tumi8/qscanner </a>
+
+      <p>
+        The QScanner is a tool for large-scale QUIC scans.
+        It establishes QUIC connections using a fork of <a href="https://github.com/tumi8/quic-go">quic-go</a>.
+        The fork is adatped to expose further information regarding the handshake.
+        <br> 
+        The QScanner can scan IPv4 and IPv6 addresses.
+        Additionally, domains can be provided as input to be used as SNI.
+        <p>
+        The scanner retrieves information regarding
+        <ul>    
+          <li> the connection </li>
+          <li> the QUIC transport parameters </li>
+          <li> TLS handshake information </li>
+          <li> X.509 certificates </li>
+        </ul>
+    <p>
+    
+    <h4 id="zmap">ZMap Modules</h4>
+      We extended the <a href="https://github.com/tumi8/zmap">ZMapv6 fork</a> with two modules, one for IPv4 and one for IPv6.
+      The modules send QUIC Initial packets with a version 0x1a1a1a1a to force a Version Negotiation.
+      Server responses are parsed to extract supported versions.<br>
+
+      Note that both modules padd the initial packet to 1200B by default as specified by RFC9000.
+      Therefore, the modules omit at least a magnitude more traffic as a simple TCP SYN scan with the same rate.
+    <p>
+
+
+    <h4 id="dns">DNS SCAN</h4>
+      For our HTTPS resource record DNS scans, we updated <a href="https://github.com/zirngibl/massdns"> MassDNS </a> to be able to query HTTPS and SVCB records.
+      Our setup uses MassDNS in combination with a local Unbound resolver.
+      Received HTTPS and SVCB records are written as raw bytes.<br>
+      To parse these records and extract QUIC deployments and their supported versions we use a <a href="skripts/parse-svcb.py">skript (skrips/parse-svcb.py)</a> based on dnspython.
+      <p>
+
     <h2 id="paper">Paper</h2>
+      Our paper has been accepted for <a href="https://conferences.sigcomm.org/imc/2021/"> IMC'21 </a> and will be published soon.<br>
+    
+    <p>
     <p>
       <b>Abstract.</b>
-      After nearly five years and 34 draft versions, standardization of the new connection
-      oriented transport protocol QUIC is finally on the horizon. We present the first large scale analysis of Internet
-      Engineering Task Force (IETF) QUIC deployments and supported versions on the Internet based
-      on a newly implemented IPv4 and IPv6 ZMap module using the QUIC version negotiation to uncover QUIC deployments
-      and used versions. We infer additional QUIC deployments from application layer protocol negotiation values
-      indicating HTTP/3 support, collected through DNS scans of the newly
-      drafted HTTPS DNS resource record and HTTP Alternative Service Header values from successful HTTP handshakes.<br>
+	After nearly five years and 34 draft versions, standardization of the
+	new connection oriented transport protocol QUIC was finalized
+	in May 2021. Designed as a fundamental network protocol with
+	increased complexity due to the combination of functionality from
+	multiple network stack layers, it has the potential to drastically
+	influence the Internet ecosystem. Nevertheless, even in its early
+	stages, the protocol attracted a variety of parties including large
+	providers. Our study shows, that more than 2.3 M IPv4 and 300 k
+	IPv6 addresses support QUIC hosting more than 30 M domains.<br>
 
-      In total, we find more than 2.3 M IPv4 and 300 k IPv6 addresses supporting QUIC even though deployment is strongly
-      dominated by large providers. We show that a transition to newer versions based on the IETF draft can be seen over
-      time and that multiple deployments, including all of Cloudflare, already activate QUIC “Version 1”.<br>
+	Using our newly implemented stateful QUIC scanner (QScanner)
+	we are able to successfully scan 26 M targets. We show that TLS as
+	an integral part is similarly configured between QUIC and TLS over
+	TCP stacks for the same target. In comparison, we identify 45 widely
+	varying transport parameter configurations, e.g., with differences
+	in the order of magnitudes for performance relevant parameters.
+	Combining these configurations with HTTP Server header values
+	and associated domains reveals two large edge deployments from
+	Facebook and Google. Thus, while found QUIC deployments are
+	located in 4667 autonomous systems, numerous of these are again
+	operated by large providers.<br>
 
-      Using our newly implemented stateful QUIC scanner (QScanner) we are able to successfully scan 26 M targets.
-      However, we show that up to 8 % of scans result in version mismatches especially with targets from Google, even
-      though servers indicated support in the version negotiation.<br>
+	In our experience, IETF QUIC already sees an advanced deployment 
+	status mainly driven by large providers. We argue that the
+	current deployment state and diversity of existing implementations
+	and seen configurations solidifies the importance of QUIC as a future
+	research topic. In this work, we provide and evaluate a versatile
+	tool set, to identify QUIC capable hosts and their properties.<br>
 
-      Overall, we identify 44 widely varying transport parameter configurations, e.g., with differences in the order of
-      magnitudes for performance relevant parameters. Combining these configurations with HTTP Server header values and
-      associated domains reveals two large edge deployments from Face
-      book and Google. Thus, while found QUIC deployments are located in 4667 autonomous systems, numerous of these are
-      again operated by providers. In our experience, IETF QUIC already sees an advanced deployment status even before
-      the final standardization mainly driven by large providers.
+	Besides the stateful QScanner we present and analyze a newly implemented
+	IPv4 and IPv6 ZMap module. We compare it to additional
+	detection methods based on HTTP Alternative Service Header 
+	values from HTTP handshakes and DNS scans of the newly drafted
+	HTTPS DNS resource record. While each method reveals unique
+	deployments the latter would allow lightweight scans to detect
+	QUIC capable targets but is drastically biased towards Cloudflare.
     </p>
-    <p><b>Paper.</b>
-      Read the final version of our paper at
-      <!-- TODO --> <a>[Coming Soon]</a>
-    </p>
+    
+    <p>
+      <b>Authors.</b> <a href="https://www.net.in.tum.de/members/zirngibl/">Johannes Zirngibl</a>, Philippe Buschmann, <a href="https://www.net.in.tum.de/members/sattler/">Patrick Sattler</a>, <a href="https://www.net.in.tum.de/members/jaeger/">Benedikt Jaeger</a>, <a href="https://www.net.in.tum.de/members/aulbach/">Juliane Aulbach</a>, <a href="https://www.net.in.tum.de/members/carle/">Georg Carle</a>.
+      <br>
+<a href="https://www.tum.de/en/"><img src="logo/TUM_Logo_extern_mt_EN_RGB_p.png" alt="TUM logo" class="img-fluid"/></a>
+
     <h2 id="contact">Contact</h2>
-    <!-- TODO -->
-    <p>Anonymous</p>
+    <b><a href="https://www.net.in.tum.de/members/zirngibl/">Johannes Zirngibl</a></b>: <b>zirngibl</b> [AT] <b>net.in.tum.de</b>
   </div>
   <footer class="navbar fixed-bottom navbar-dark bg-dark">
     <div class="container">
