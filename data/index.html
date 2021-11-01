@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: https://ogp.me/ns#">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>It’s over 9000</title>
+
+  <meta name="application-name" content="QUIC Data">
+  <meta property="og:title" content="QUIC Data">
+
+  <meta name="description"
+    content="Access to the data of the paper 'It’s over 9000: Analyzing early QUIC Deployments with the Standardization on the Horizon'">
+  <meta property="og:description"
+    content="Access to the data of the paper 'It’s over 9000: Analyzing early QUIC Deployments with the Standardization on the Horizon'">
+
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://quicimc.github.io/">
+
+  <meta name="twitter:dnt" content="on">
+
+  <link href="../css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/bootstrap-table.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <style>
+    :root {
+      --color: #000000;
+      --highlight-color: #ffffff;
+    }
+
+    body {
+      font-family: 'Roboto';
+      margin: 0;
+    }
+
+    .content {
+      padding-top: 90px;
+      padding-bottom: 50px;
+    }
+    .bootstrap-table .fixed-table-container .table tbody tr.selected td {
+      background-color: #ffffff;
+    }
+  </style>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src https://* data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'nonce-EDNnf03nceIOfn39fn3e9h3sdfa' code.jquery.com; font-src 'self' use.fontawesome.com">
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
+        aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav container">
+          <a class="nav-item nav-link" href="..#results">Analysis Results</a>
+          <a class="nav-item nav-link" href="..#tools">Software and Tools</a>
+          <a class="nav-item nav-link" href="..#paper">Paper</a>
+          <a class="nav-item nav-link" href="..#contact">Contact</a>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <div class="container content">
+    <h1>It’s over 9000: Analyzing early QUIC Deployments with the Standardization on the Horizon</h1>
+    <p>
+      On this website we present additional, updated plots for our paper <i>It’s over 9000: Analyzing early QUIC
+          Deployments with the Standardization on the Horizon</i>.<br>
+      <b>If you are interested in additional data, further insights or collaborations please contact us.</b>
+    </p>
+    <h2>ZMap Results</h2>
+    <h3 style="text-align:center;"> IPv4 </h3>
+    <br>
+    <br>
+    <div id="zmapv4-individual" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <br>
+    <div id="zmapv4-grouped" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    
+    <h3 style="text-align:center;"> IPv6 </h3>
+    <br>
+    <br>
+    <div id="zmapv6-individual" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <br>
+    <div id="zmapv6-grouped" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    
+    <h2>ALT-SVC Header</h2>
+    <h3 style="text-align:center;"> IPv4 </h3>
+    <br>
+    <br>
+    <div id="altsvc4-individual" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <br>
+    <div id="altsvc4-grouped" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+    <h3 style="text-align:center;"> IPv6 </h3>
+    <br>
+    <br>
+    <div id="altsvc6-individual" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <br>
+    <div id="altsvc6-grouped" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+    <h2 id="contact">Contact</h2>
+    <b><a href="https://www.net.in.tum.de/members/zirngibl/">Johannes Zirngibl</a></b>: <b>zirngibl</b> [AT] <b>net.in.tum.de</b>
+  </div>
+  <footer class="navbar fixed-bottom navbar-dark bg-dark">
+    <div class="container">
+      <span class="text-light">&copy; 2021</span>
+    </div>
+  </footer>
+  <script src="../js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="../js/bootstrap-table.min.js"></script>
+
+<!-- Highchart plotting libs -->
+<script src="../js/highcharts/highstock.js"></script>
+<script src="../js/highcharts/exporting.js"></script>
+<script src="../js/highcharts/offline-exporting.js"></script>
+<script src="../js/highcharts/export-data.js"></script>
+
+<!-- Parse JSON for plotting -->
+<script nonce="EDNnf03nceIOfn39fn3e9h3sdfa">
+	// Set thousands separator as comma
+	Highcharts.setOptions({
+		lang: {
+			thousandsSep: ','
+		}
+	});
+
+	// Get the CSV and create the chart
+	$.getJSON('zmapv4_individual.json', function (chart) {
+		Highcharts.chart('zmapv4-individual', chart);
+	});
+    
+    $.getJSON('zmapv4_grouped.json', function (chart) {
+        Highcharts.chart('zmapv4-grouped', chart);
+    });
+
+    $.getJSON('zmapv6_individual.json', function (chart) {
+        Highcharts.chart('zmapv6-individual', chart);
+    });
+    
+    $.getJSON('zmapv6_grouped.json', function (chart) {
+        Highcharts.chart('zmapv6-grouped', chart);
+    });
+
+    $.getJSON('altsvc4_individual.json', function (chart) {
+        Highcharts.chart('altsvc4-individual', chart);
+    });
+
+    $.getJSON('altsvc4_grouped.json', function (chart) {
+        Highcharts.chart('altsvc4-grouped', chart);
+    });
+
+    $.getJSON('altsvc6_individual.json', function (chart) {
+        Highcharts.chart('altsvc6-individual', chart);
+    });
+
+    $.getJSON('altsvc6_grouped.json', function (chart) {
+        Highcharts.chart('altsvc6-grouped', chart);
+    });
+
+</script>
+<!-- JS ENDS HERE -->
+
+</body>
+
+</html>

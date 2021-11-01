@@ -55,7 +55,7 @@
       background-color: #ffffff;
     }
   </style>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src https://* data:; style-src 'self' 'unsafe-inline'; script-src 'self' code.jquery.com; font-src 'self' use.fontawesome.com">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src https://* data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'nonce-EDNnf03nceIOfn39fn3e9h3sdfa' code.jquery.com; font-src 'self' use.fontawesome.com">
 
 </head>
 
@@ -72,6 +72,7 @@
           <a class="nav-item nav-link" href="#tools">Software and Tools</a>
           <a class="nav-item nav-link" href="#paper">Paper</a>
           <a class="nav-item nav-link" href="#contact">Contact</a>
+          <a class="nav-item nav-link" href="data/">Additional Data</a>
         </ul>
       </div>
     </div>
@@ -84,12 +85,15 @@
     </p>
     <h2 id="results">Results and Data</h2>
     <p>
-    <li> We provide a list of supported version sets from the latest ZMap scans with the number of respective addresses and ASes for: 
-        <ul>
-            <li> <a href="https://github.com/quicimc/quicimc.github.io/blob/main/data/zmap-v4-versions-cw18-2021.csv"> IPv4 </a> </li>
-            <li> <a href="https://github.com/quicimc/quicimc.github.io/blob/main/data/zmap-v6-versions-cw18-2021.csv"> IPv6 </a> </li>
-        </ul>
-    </li>
+    We collect and update results on a regular basis and offer new data.<br>
+    Further results can be found <a href="data/"> here</a><br>
+    <b>If you are interested in additional data, further insights or collaborations please contact us.</b>
+    <br>
+    <div id="zmapv4-individual" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <br>
+    <div id="zmapv4-grouped" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <br>
+
     <li> A list of transport parameter configuration found during stateful scans can be found <a href="https://github.com/quicimc/quicimc.github.io/blob/main/data/quic-transport-configurations-cw18-2021.csv"> here </a> </li>
     <table
       id="table-dashboard"
@@ -191,7 +195,7 @@
 
 
     <h4 id="dns">DNS SCAN</h4>
-      For our HTTPS resource record DNS scans, we updated <a href="https://github.com/zirngibl/massdns"> MassDNS </a> to be able to query HTTPS and SVCB records.
+      For our HTTPS resource record DNS scans, we contributed to <a href="https://github.com/blechschmidt/massdns"> MassDNS </a> to be able to query HTTPS and SVCB records.
       Our setup uses MassDNS in combination with a local Unbound resolver.
       Received HTTPS and SVCB records are written as raw bytes.<br>
       To parse these records and extract QUIC deployments and their supported versions we use a <a href="skripts/parse-svcb.py">skript (skrips/parse-svcb.py)</a> based on dnspython.
@@ -258,6 +262,32 @@
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="js/bootstrap-table.min.js"></script>
+
+<!-- Highchart plotting libs -->
+<script src="js/highcharts/highstock.js"></script>
+<script src="js/highcharts/exporting.js"></script>
+<script src="js/highcharts/offline-exporting.js"></script>
+<script src="js/highcharts/export-data.js"></script>
+
+<!-- Parse JSON for plotting -->
+<script nonce="EDNnf03nceIOfn39fn3e9h3sdfa">
+	// Set thousands separator as comma
+	Highcharts.setOptions({
+		lang: {
+			thousandsSep: ','
+		}
+	});
+
+	// Get the CSV and create the chart
+	$.getJSON('data/zmapv4_individual.json', function (chart) {
+		Highcharts.chart('zmapv4-individual', chart);
+	});
+    
+    $.getJSON('data/zmapv4_grouped.json', function (chart) {
+        Highcharts.chart('zmapv4-grouped', chart);
+    });
+</script>
+<!-- JS ENDS HERE -->
 
 </body>
 
