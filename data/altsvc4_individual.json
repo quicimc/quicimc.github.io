@@ -3201,11 +3201,11 @@
     }
   ],
   "title": {
-    "text": ""
+    "text": "ALT-SVC Header IPv4 individually supported versions"
   },
   "tooltip": {
     "headerFormat": "{series.name} on ",
-    "pointFormat": "{point.x:%b %d, %Y}: {point.y:,.0f} addresses"
+    "pointFormat": "{point.x:%b %d, %Y}: {point.y:,.0f} targets"
   },
   "xAxis": {
     "dateTimeLabelFormats": {
@@ -3221,7 +3221,7 @@
     {
       "min": 0,
       "title": {
-        "text": "Addresses"
+        "text": "Targets (Address + Domain)"
       }
     }
   ]

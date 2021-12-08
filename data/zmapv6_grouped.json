@@ -2925,7 +2925,7 @@
     }
   ],
   "title": {
-    "text": ""
+    "text": "ZMap IPv6 supported version set"
   },
   "tooltip": {
     "headerFormat": "{series.name} on ",

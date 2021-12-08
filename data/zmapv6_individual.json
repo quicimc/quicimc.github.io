@@ -3097,7 +3097,7 @@
     }
   ],
   "title": {
-    "text": ""
+    "text": "ZMap IPv6 individually supported versions"
   },
   "tooltip": {
     "headerFormat": "{series.name} on ",
